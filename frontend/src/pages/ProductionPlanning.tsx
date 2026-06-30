@@ -135,19 +135,21 @@ const ProductionPlanning = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-24">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link to="/production" className="p-2 rounded-xl hover:bg-white hover:shadow-sm text-gray-500 transition-all">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-4">
-            Production Planning 
-            <span className="text-purple-600 bg-purple-100 px-3 py-1 text-base rounded-lg border border-purple-200">#208216</span>
-          </h1>
-          <p className="text-gray-500 mt-1">Define bill of materials average consumption and color variants.</p>
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        <div className="flex items-center gap-4">
+          <Link to="/production" className="p-2 rounded-xl hover:bg-white hover:shadow-sm text-gray-500 transition-all border border-gray-200 bg-white md:bg-transparent md:border-transparent shrink-0">
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2 flex-wrap">
+              Production Planning 
+              <span className="text-purple-600 bg-purple-100 px-3 py-1 text-sm md:text-base rounded-lg border border-purple-200">#208216</span>
+            </h1>
+            <p className="text-sm md:text-base text-gray-500 mt-1">Define bill of materials and variants.</p>
+          </div>
         </div>
-        <div className="ml-auto">
-          <span className={`px-4 py-1.5 rounded-full text-sm font-bold border ${
+        <div className="md:ml-auto flex w-full md:w-auto">
+          <span className={`px-4 py-2 rounded-full text-sm font-bold border text-center w-full md:w-auto ${
             status === 'Pending' ? 'bg-orange-100 text-orange-700 border-orange-200' :
             status === 'Consumption Saved' ? 'bg-blue-100 text-blue-700 border-blue-200' :
             status === 'Material Planning Pending' ? 'bg-indigo-100 text-indigo-700 border-indigo-200' :
@@ -195,10 +197,10 @@ const ProductionPlanning = () => {
           </table>
         </div>
         {status === 'Pending' && (
-          <div className="p-6 bg-gray-50/50 border-t border-gray-100 flex justify-end">
+          <div className="p-4 md:p-6 bg-gray-50/50 border-t border-gray-100 flex flex-col md:flex-row justify-end">
             <button 
               onClick={saveConsumption}
-              className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-xl font-medium transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 md:py-2.5 rounded-xl font-medium transition-all shadow-sm w-full md:w-auto min-h-[44px]"
             >
               <Save className="w-4 h-4" />
               Save Average Consumption
@@ -212,37 +214,39 @@ const ProductionPlanning = () => {
         
         {/* Add Color Form */}
         {status === 'Consumption Saved' && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 animate-in slide-in-from-bottom-4">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-6 animate-in slide-in-from-bottom-4">
             <h2 className="text-lg font-semibold text-gray-800 mb-6">Add Colors</h2>
-            <div className="flex gap-4 items-end flex-wrap">
-              <div className="flex-1 min-w-[200px]">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+              <div className="md:col-span-5">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Color Name</label>
                 <input 
                   type="text"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 md:py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[44px]"
                   placeholder="e.g. Red, Maroon..."
                   value={colorInput}
                   onChange={(e) => setColorInput(e.target.value)}
                 />
               </div>
-              <div className="flex-1 min-w-[150px]">
+              <div className="md:col-span-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
                 <input 
                   type="number"
                   min="1"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 md:py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all min-h-[44px]"
                   placeholder="0"
                   value={qtyInput}
                   onChange={(e) => setQtyInput(e.target.value)}
                 />
               </div>
-              <button 
-                onClick={addColor}
-                className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-8 py-2.5 rounded-xl font-medium transition-all shadow-sm h-[46px]"
-              >
-                <Plus className="w-5 h-5" />
-                Add
-              </button>
+              <div className="md:col-span-3">
+                <button 
+                  onClick={addColor}
+                  className="flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white w-full py-3 md:py-2.5 rounded-xl font-medium transition-all shadow-sm min-h-[44px]"
+                >
+                  <Plus className="w-5 h-5" />
+                  Add Color
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -285,11 +289,11 @@ const ProductionPlanning = () => {
               </tbody>
             </table>
             {status === 'Consumption Saved' && (
-              <div className="p-6 bg-gray-50/50 border-t border-gray-100 flex justify-end">
+              <div className="p-4 md:p-6 bg-gray-50/50 border-t border-gray-100 flex justify-end">
                 <button 
                   onClick={saveColors}
                   disabled={colors.length === 0}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-8 py-2.5 rounded-xl font-medium transition-all shadow-sm"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-8 py-3 md:py-2.5 rounded-xl font-medium transition-all shadow-sm w-full md:w-auto min-h-[44px]"
                 >
                   <Save className="w-4 h-4" />
                   Save Colors
@@ -353,39 +357,39 @@ const ProductionPlanning = () => {
             </div>
             
             {/* Summary Card inside the section */}
-            <div className="bg-gray-50/80 p-6 border-t border-gray-100">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div>
+            <div className="bg-gray-50/80 p-4 md:p-6 border-t border-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div className="bg-white p-3 rounded-xl border border-gray-100">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Production Code</p>
-                  <p className="font-bold text-gray-900">208216</p>
+                  <p className="font-bold text-gray-900 text-lg">208216</p>
                 </div>
-                <div>
+                <div className="bg-white p-3 rounded-xl border border-gray-100">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Colors</p>
-                  <p className="font-bold text-gray-900">{colors.length}</p>
+                  <p className="font-bold text-gray-900 text-lg">{colors.length}</p>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Production Quantity</p>
-                  <p className="font-bold text-gray-900">{totalQty}</p>
+                <div className="bg-white p-3 rounded-xl border border-gray-100">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Quantity</p>
+                  <p className="font-bold text-gray-900 text-lg">{totalQty}</p>
                 </div>
-                <div>
+                <div className="bg-white p-3 rounded-xl border border-gray-100">
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Materials</p>
-                  <p className="font-bold text-gray-900">{requirements.length}</p>
+                  <p className="font-bold text-gray-900 text-lg">{requirements.length}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {!isPlanningComplete && (
-            <div className="flex justify-end gap-4 pt-4">
+            <div className="flex flex-col md:flex-row justify-end gap-3 md:gap-4 pt-4">
               <button 
                 onClick={() => setStatus('Consumption Saved')}
-                className="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                className="px-6 py-3.5 rounded-xl font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 transition-colors w-full md:w-auto text-center"
               >
                 Back
               </button>
               <button 
                 onClick={saveMaterialRequirements}
-                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-green-600/20 text-lg"
+                className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-green-600/20 text-lg w-full md:w-auto"
               >
                 <CheckCircle className="w-5 h-5" />
                 Save Material Requirement
@@ -394,17 +398,17 @@ const ProductionPlanning = () => {
           )}
           {isPlanningComplete && (
             <div className="space-y-6 animate-in slide-in-from-bottom-4 pt-4">
-              <div className="bg-green-50 border border-green-200 text-green-800 p-6 rounded-xl flex items-center gap-4">
-                 <CheckCircle className="w-8 h-8 text-green-600" />
+              <div className="bg-green-50 border border-green-200 text-green-800 p-4 md:p-6 rounded-xl flex flex-col md:flex-row items-start md:items-center gap-4">
+                 <CheckCircle className="w-8 h-8 text-green-600 shrink-0" />
                  <div>
                     <h3 className="font-bold text-lg">Planning Completed Successfully!</h3>
-                    <p className="text-green-700">All material requirements and issues have been saved and finalized.</p>
+                    <p className="text-green-700 mt-1 md:mt-0">All material requirements and issues have been saved and finalized.</p>
                  </div>
               </div>
-              <div className="flex justify-end pt-2">
+              <div className="flex flex-col pt-2">
                 <Link 
                   to={`/process-mapping/${id || '208216'}`}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 text-lg"
+                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 text-lg w-full md:w-auto md:self-end"
                 >
                   Move to Process Allocation
                 </Link>

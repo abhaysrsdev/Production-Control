@@ -1,7 +1,7 @@
 import { Package, Clock, CheckCircle2, Factory, XCircle } from 'lucide-react';
 
 const StatCard = ({ title, value, icon: Icon, colorClass }: any) => (
-  <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+  <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col justify-between">
     <div className="flex items-center justify-between mb-4">
       <h3 className="text-gray-500 font-medium text-sm">{title}</h3>
       <div className={`p-3 rounded-xl ${colorClass}`}>
@@ -20,7 +20,7 @@ const Dashboard = () => {
         <p className="text-gray-500 mt-1">Here is the latest production status.</p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-stretch">
         <StatCard title="Today's Orders" value="12" icon={Package} colorClass="bg-blue-50 text-blue-600" />
         <StatCard title="Pending Planning" value="8" icon={Clock} colorClass="bg-orange-50 text-orange-600" />
         <StatCard title="Planning Completed" value="4" icon={CheckCircle2} colorClass="bg-green-50 text-green-600" />

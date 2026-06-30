@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Eye, Edit, Search } from 'lucide-react';
+import { Eye, Search } from 'lucide-react';
 
 const ProductionList = () => {
   // Mock Data since backend is not fully connected yet
@@ -19,23 +19,24 @@ const ProductionList = () => {
   }
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      <div className="flex justify-between items-end">
+    <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Production Orders</h1>
           <p className="text-gray-500 mt-1">Manage and track all production batches.</p>
         </div>
-        <div className="relative">
+        <div className="relative w-full md:w-auto">
           <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input 
             type="text" 
             placeholder="Search Production Code..." 
-            className="pl-10 pr-4 py-2 border border-gray-200 rounded-xl w-64 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+            className="pl-10 pr-4 py-3 md:py-2 border border-gray-200 rounded-xl w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      {/* Desktop/Tablet Table View */}
+      <div className="hidden md:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 text-sm">
@@ -71,6 +72,45 @@ const ProductionList = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Mobile Card View */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {productions.map((prod) => (
+          <div key={prod.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Production Code</p>
+                <p className="font-bold text-gray-900 text-lg">#{prod.code}</p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusStyle(prod.status)}`}>
+                {prod.status}
+              </span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Date</p>
+                <p className="text-gray-900 font-medium">{prod.date}</p>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Planner</p>
+                <p className="text-gray-900 font-medium">{prod.planner}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <Link 
+                to={`/production/${prod.id}`}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-xl transition-colors font-semibold"
+              >
+                <Eye className="w-5 h-5" />
+                View Order
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+      
     </div>
   );
 };

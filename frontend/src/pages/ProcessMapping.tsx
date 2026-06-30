@@ -37,52 +37,56 @@ const ProcessMapping = () => {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-24">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <Link to={`/production/${id}`} className="p-2 rounded-xl hover:bg-white hover:shadow-sm text-gray-500 transition-all">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-4">
-            Process Mapping 
-            <span className="text-blue-600 bg-blue-100 px-3 py-1 text-base rounded-lg border border-blue-200">#208216</span>
-          </h1>
-          <p className="text-gray-500 mt-1">Assign materials color-wise to manufacturing processes.</p>
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        <div className="flex items-center gap-4">
+          <Link to={`/production/${id}`} className="p-2 rounded-xl hover:bg-white hover:shadow-sm text-gray-500 transition-all border border-gray-200 bg-white md:bg-transparent md:border-transparent shrink-0">
+            <ArrowLeft className="w-5 h-5" />
+          </Link>
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight flex items-center gap-2 flex-wrap">
+              Process Mapping 
+              <span className="text-blue-600 bg-blue-100 px-3 py-1 text-sm md:text-base rounded-lg border border-blue-200">#208216</span>
+            </h1>
+            <p className="text-sm md:text-base text-gray-500 mt-1">Assign materials color-wise to manufacturing processes.</p>
+          </div>
         </div>
       </div>
 
       {/* Production Summary Card */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex items-center justify-between">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Production Code</p>
-            <p className="font-bold text-gray-900 text-lg">208216</p>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-6 flex items-center justify-between">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
+          <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 md:bg-transparent md:p-0 md:border-none">
+            <p className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Production Code</p>
+            <p className="font-bold text-gray-900 md:text-lg">208216</p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Party Name</p>
-            <p className="font-bold text-gray-900 text-lg">Shree Radha Retail</p>
+          <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 md:bg-transparent md:p-0 md:border-none">
+            <p className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Party Name</p>
+            <p className="font-bold text-gray-900 md:text-lg">Shree Radha Retail</p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Quantity</p>
-            <p className="font-bold text-gray-900 text-lg">60</p>
+          <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 md:bg-transparent md:p-0 md:border-none">
+            <p className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Quantity</p>
+            <p className="font-bold text-gray-900 md:text-lg">60</p>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Current Status</p>
-            <span className={`px-3 py-1 rounded-full text-sm font-bold inline-block mt-1 ${isAllocated ? 'bg-indigo-100 text-indigo-700 border border-indigo-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
-              {isAllocated ? 'Process Allocated' : 'Planning Completed'}
+          <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 md:bg-transparent md:p-0 md:border-none">
+            <p className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Current Status</p>
+            <span className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-bold inline-block mt-1 ${isAllocated ? 'bg-indigo-100 text-indigo-700 border border-indigo-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
+              {isAllocated ? 'Allocated' : 'Planned'}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Mapping Table */}
+      {/* Mapping Table / Cards */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+        <div className="p-4 md:p-6 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
             <PackageOpen className="w-5 h-5 text-blue-600" />
             Color-Wise Process Mapping
           </h2>
         </div>
-        <div className="overflow-x-auto">
+        
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-blue-50 border-b border-blue-100 text-blue-900 text-sm">
@@ -127,10 +131,51 @@ const ProcessMapping = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Mobile Card View */}
+        <div className="grid grid-cols-1 md:hidden gap-0">
+          {materials.map((m) => (
+            <div key={m.id} className="p-4 border-b border-gray-100 flex flex-col gap-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="font-bold text-gray-900 flex items-center gap-2 text-lg">
+                    <div className={`w-3 h-3 rounded-full ${
+                      m.color === 'Red' ? 'bg-red-500' : m.color === 'Blue' ? 'bg-blue-500' : 'bg-green-500'
+                    }`}></div>
+                    {m.color}
+                  </div>
+                  <p className="text-gray-900 font-medium mt-1">{m.name}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-500 uppercase">Required</p>
+                  <p className="text-gray-900 font-bold">{m.req} {m.unit}</p>
+                </div>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 grid grid-cols-2 gap-4">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" checked={m.touching} onChange={() => toggleProcess(m.id, 'touching')} className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" />
+                  <span className="font-medium text-gray-700">Touching</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" checked={m.embroidery} onChange={() => toggleProcess(m.id, 'embroidery')} className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" />
+                  <span className="font-medium text-gray-700">Embroidery</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" checked={m.latkan} onChange={() => toggleProcess(m.id, 'latkan')} className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" />
+                  <span className="font-medium text-gray-700">Latkan</span>
+                </label>
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input type="checkbox" checked={m.stitching} onChange={() => toggleProcess(m.id, 'stitching')} className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500" />
+                  <span className="font-medium text-gray-700">Stitching</span>
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* NEW SECTION: Process Assignment */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-6">
         <h2 className="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-100 pb-4">Process Assignment</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
@@ -139,7 +184,7 @@ const ProcessMapping = () => {
             <select 
               value={assignedTo} 
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[44px]"
               required
             >
               <option value="" disabled>Select Employee</option>
@@ -156,7 +201,7 @@ const ProcessMapping = () => {
             <select 
               value={priority} 
               onChange={(e) => setPriority(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all min-h-[44px]"
               required
             >
               <option value="" disabled>Select Priority</option>
@@ -179,19 +224,19 @@ const ProcessMapping = () => {
 
         </div>
 
-        <div className="mt-8 flex justify-end gap-4">
+        <div className="mt-8 flex flex-col md:flex-row justify-end gap-4">
           {!isAllocated ? (
             <button 
               onClick={saveProcessAllocation}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-indigo-600/20 text-lg"
+              className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-indigo-600/20 text-lg w-full md:w-auto"
             >
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle className="w-5 h-5 shrink-0" />
               Save Process Allocation
             </button>
           ) : (
             <Link 
               to={`/karigar-allocation/${id || '208216'}`}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 text-lg"
+              className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-md shadow-blue-600/20 text-lg w-full md:w-auto"
             >
               Move to Karigar Allocation
             </Link>
